@@ -10,6 +10,7 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'redis', ' ~> 3.0'
+gem 'pg', '~> 0.18'
 gem 'stripe'
 gem 'disqus_rails'
 group :development, :test do

@@ -3185,3 +3185,260 @@ Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-01-10 08:06:57 -0500
 Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
 MessagesChannel is transmitting the subscription confirmation
 MessagesChannel is streaming from messages
+  [1m[35m (160.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying PRIMARY KEY)[0m
+  [1m[35m (16.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5689717470416479920);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateUsers (20140627005245)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+DEPRECATION WARNING: Directly inheriting from ActiveRecord::Migration is deprecated. Please specify the Rails release the migration was written for:
+
+  class CreateUsers < ActiveRecord::Migration[4.2] (called from load at /usr/local/rvm/gems/ruby-2.3.1@rails-omniauth/bin/rake:23)
+  [1m[35m (48.2ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "name" character varying, "provider" character varying, "uid" character varying, "created_at" timestamp, "updated_at" timestamp)[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20140627005245"]]
+  [1m[35m (2.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateChatrooms (20170110021410)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (13.6ms)[0m  [1m[35mCREATE TABLE "chatrooms" ("id" serial primary key, "topic" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170110021410"]]
+  [1m[35m (2.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateMessages (20170110022318)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (41.7ms)[0m  [1m[35mCREATE TABLE "messages" ("id" serial primary key, "content" character varying, "user_id" integer, "chatroom_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_273a25a7a6"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_5d3b5a27f5"
+FOREIGN KEY ("chatroom_id")
+  REFERENCES "chatrooms" ("id")
+)[0m
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE  INDEX  "index_messages_on_user_id" ON "messages"  ("user_id")[0m
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE  INDEX  "index_messages_on_chatroom_id" ON "messages"  ("chatroom_id")[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170110022318"]]
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateRegistrations (20170110071531)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (12.3ms)[0m  [1m[35mCREATE TABLE "registrations" ("id" serial primary key, "email" character varying, "card_token" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170110071531"]]
+  [1m[35m (4.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", 2017-01-10 13:31:17 UTC], ["updated_at", 2017-01-10 13:31:17 UTC]]
+  [1m[35m (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(5689717470416479920)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'chatrooms'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'messages'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'registrations'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mChatroom Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "chatrooms" WHERE "chatrooms"."topic" = $1 LIMIT $2[0m  [["topic", "room1"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "chatrooms" ("topic", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["topic", "room1"], ["created_at", 2017-01-10 13:31:21 UTC], ["updated_at", 2017-01-10 13:31:21 UTC]]
+  [1m[35m (3.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mChatroom Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "chatrooms" WHERE "chatrooms"."topic" = $1 LIMIT $2[0m  [["topic", "room2"], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "chatrooms" ("topic", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["topic", "room2"], ["created_at", 2017-01-10 13:31:21 UTC], ["updated_at", 2017-01-10 13:31:21 UTC]]
+  [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mChatroom Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "chatrooms" WHERE "chatrooms"."topic" = $1 LIMIT $2[0m  [["topic", "room3"], ["LIMIT", 1]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "chatrooms" ("topic", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["topic", "room3"], ["created_at", 2017-01-10 13:31:21 UTC], ["updated_at", 2017-01-10 13:31:21 UTC]]
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/" for 127.0.0.1 at 2017-01-10 08:31:26 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by VisitorsController#index as HTML
+  Rendering visitors/index.html.erb within layouts/application
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "users"[0m
+  Rendered visitors/index.html.erb within layouts/application (14.8ms)
+  Rendered layouts/_navigation_links.html.erb (0.8ms)
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered layouts/_nav_links_for_auth.html.erb (35.4ms)
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered layouts/_nav_links_for_chatroom.html.erb (2.3ms)
+  Rendered layouts/_navigation.html.erb (44.2ms)
+  Rendered layouts/_messages.html.erb (0.7ms)
+Completed 200 OK in 517ms (Views: 493.7ms | ActiveRecord: 12.3ms)
+
+
+Started GET "/cable" for 127.0.0.1 at 2017-01-10 08:31:27 -0500
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-01-10 08:31:27 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+MessagesChannel is transmitting the subscription confirmation
+MessagesChannel is streaming from messages
+Started GET "/signin" for 127.0.0.1 at 2017-01-10 08:31:29 -0500
+Processing by SessionsController#new as HTML
+Redirected to http://localhost:3000/auth/twitter
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/auth/twitter" for 127.0.0.1 at 2017-01-10 08:31:29 -0500
+Started GET "/signin" for 127.0.0.1 at 2017-01-10 08:31:29 -0500
+Processing by SessionsController#new as HTML
+Redirected to http://localhost:3000/auth/twitter
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/auth/twitter" for 127.0.0.1 at 2017-01-10 08:31:29 -0500
+Finished "/cable/" [WebSocket] for 127.0.0.1 at 2017-01-10 08:31:31 -0500
+MessagesChannel stopped streaming from messages
+Started GET "/auth/twitter/callback?oauth_token=V5_lEQAAAAAAysVLAAABWYiTlXo&oauth_verifier=rKBRG2lPJ98KVu4yHHf6DbtPoRfsGioo" for 127.0.0.1 at 2017-01-10 08:31:31 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"oauth_token"=>"V5_lEQAAAAAAysVLAAABWYiTlXo", "oauth_verifier"=>"rKBRG2lPJ98KVu4yHHf6DbtPoRfsGioo", "provider"=>"twitter"}
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."provider" = $1 AND "users"."uid" = $2 ORDER BY "users"."id" ASC LIMIT $3[0m  [["provider", "twitter"], ["uid", "818618714429923328"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "users" ("name", "provider", "uid", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "FutureStar"], ["provider", "twitter"], ["uid", "818618714429923328"], ["created_at", 2017-01-10 13:31:32 UTC], ["updated_at", 2017-01-10 13:31:32 UTC]]
+  [1m[35m (20.6ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 32ms (ActiveRecord: 22.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-01-10 08:31:32 -0500
+Processing by VisitorsController#index as HTML
+  Rendering visitors/index.html.erb within layouts/application
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "users"[0m
+  Rendered visitors/index.html.erb within layouts/application (3.9ms)
+  Rendered layouts/_navigation_links.html.erb (0.5ms)
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered layouts/_nav_links_for_auth.html.erb (1.9ms)
+  Rendered layouts/_nav_links_for_chatroom.html.erb (0.5ms)
+  Rendered layouts/_navigation.html.erb (6.5ms)
+  Rendered layouts/_messages.html.erb (1.4ms)
+Completed 200 OK in 119ms (Views: 116.4ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/cable" for 127.0.0.1 at 2017-01-10 08:31:32 -0500
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-01-10 08:31:32 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+MessagesChannel is transmitting the subscription confirmation
+MessagesChannel is streaming from messages
+Started GET "/chatrooms/1" for 127.0.0.1 at 2017-01-10 08:31:34 -0500
+Processing by ChatroomsController#show as HTML
+  Parameters: {"slug"=>"1"}
+  [1m[36mChatroom Load (0.2ms)[0m  [1m[34mSELECT  "chatrooms".* FROM "chatrooms" WHERE "chatrooms"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering chatrooms/show.html.erb within layouts/application
+  [1m[36mMessage Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "messages" WHERE "messages"."chatroom_id" = $1 LIMIT $2[0m  [["chatroom_id", 1], ["LIMIT", 1]]
+  Rendered messages/_message_form.html.erb (386.5ms)
+  Rendered chatrooms/_disqus.html.erb (0.7ms)
+  Rendered chatrooms/show.html.erb within layouts/application (424.5ms)
+  Rendered layouts/_navigation_links.html.erb (0.3ms)
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered layouts/_nav_links_for_auth.html.erb (2.0ms)
+  Rendered layouts/_nav_links_for_chatroom.html.erb (0.4ms)
+  Rendered layouts/_navigation.html.erb (4.9ms)
+  Rendered layouts/_messages.html.erb (0.4ms)
+Completed 200 OK in 530ms (Views: 471.4ms | ActiveRecord: 8.2ms)
+
+
+Started GET "/cable" for 127.0.0.1 at 2017-01-10 08:31:36 -0500
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-01-10 08:31:36 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+MessagesChannel is transmitting the subscription confirmation
+MessagesChannel is streaming from messages
+Started POST "/messages" for 127.0.0.1 at 2017-01-10 08:31:38 -0500
+Processing by MessagesController#create as JS
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fOY8TfBwEEujpk9t6OmcWS5GMFI10YlOj8r0XfPmxu+lnVOUQDv27R0oUbgYPanpRb84dUM15bH+vzyIzu+vSw==", "message"=>{"content"=>"adsf", "chatroom_id"=>"1"}, "commit"=>"send"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mChatroom Load (0.2ms)[0m  [1m[34mSELECT  "chatrooms".* FROM "chatrooms" WHERE "chatrooms"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "messages" ("content", "user_id", "chatroom_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["content", "adsf"], ["user_id", 1], ["chatroom_id", 1], ["created_at", 2017-01-10 13:31:38 UTC], ["updated_at", 2017-01-10 13:31:38 UTC]]
+  [1m[35m (4.1ms)[0m  [1m[35mCOMMIT[0m
+[ActionCable] Broadcasting to messages: {:message=>"adsf", :user=>"FutureStar"}
+Completed 200 OK in 75ms (ActiveRecord: 6.0ms)
+
+
+MessagesChannel transmitting {"message"=>"adsf", "user"=>"FutureStar"} (via streamed from messages)
+MessagesChannel transmitting {"message"=>"adsf", "user"=>"FutureStar"} (via streamed from messages)
+Started POST "/messages" for 127.0.0.1 at 2017-01-10 08:31:41 -0500
+Processing by MessagesController#create as JS
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fOY8TfBwEEujpk9t6OmcWS5GMFI10YlOj8r0XfPmxu+lnVOUQDv27R0oUbgYPanpRb84dUM15bH+vzyIzu+vSw==", "message"=>{"content"=>"adsfadsfasdf", "chatroom_id"=>"1"}, "commit"=>"send"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mChatroom Load (0.2ms)[0m  [1m[34mSELECT  "chatrooms".* FROM "chatrooms" WHERE "chatrooms"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (22.4ms)[0m  [1m[32mINSERT INTO "messages" ("content", "user_id", "chatroom_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["content", "adsfadsfasdf"], ["user_id", 1], ["chatroom_id", 1], ["created_at", 2017-01-10 13:31:41 UTC], ["updated_at", 2017-01-10 13:31:41 UTC]]
+  [1m[35m (2.9ms)[0m  [1m[35mCOMMIT[0m
+[ActionCable] Broadcasting to messages: {:message=>"adsfadsfasdf", :user=>"FutureStar"}
+Completed 200 OK in 31ms (ActiveRecord: 25.9ms)
+
+
+MessagesChannel transmitting {"message"=>"adsfadsfasdf", "user"=>"FutureStar"} (via streamed from messages)
+MessagesChannel transmitting {"message"=>"adsfadsfasdf", "user"=>"FutureStar"} (via streamed from messages)
+Started POST "/registrations" for 127.0.0.1 at 2017-01-10 08:32:01 -0500
+Processing by RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"zpLXZTkUi782V4Qs9Pw81gQbIFBeCuHJ9ddyEal6xyMmXDGgXGM1FaljezsR1ZUJx64pEfR1cMg3GogubyDugQ==", "stripeToken"=>"tok_19aPjGCvj0LwVWarUT0pmJ5X", "stripeTokenType"=>"card", "stripeEmail"=>"future21star@yahoo.com"}
+Redirected to http://localhost:3000/chatrooms/1
+Completed 302 Found in 2749ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/chatrooms/1" for 127.0.0.1 at 2017-01-10 08:32:03 -0500
+Processing by ChatroomsController#show as HTML
+  Parameters: {"slug"=>"1"}
+  [1m[36mChatroom Load (0.6ms)[0m  [1m[34mSELECT  "chatrooms".* FROM "chatrooms" WHERE "chatrooms"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering chatrooms/show.html.erb within layouts/application
+  [1m[36mMessage Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "messages" WHERE "messages"."chatroom_id" = $1 LIMIT $2[0m  [["chatroom_id", 1], ["LIMIT", 1]]
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT "messages".* FROM "messages" WHERE "messages"."chatroom_id" = $1[0m  [["chatroom_id", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered collection of messages/_message.html.erb [2 times] (6.9ms)
+  Rendered messages/_message_form.html.erb (1.4ms)
+  Rendered chatrooms/_disqus.html.erb (0.3ms)
+  Rendered chatrooms/show.html.erb within layouts/application (16.3ms)
+  Rendered layouts/_navigation_links.html.erb (0.4ms)
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered layouts/_nav_links_for_auth.html.erb (0.9ms)
+  Rendered layouts/_nav_links_for_chatroom.html.erb (0.3ms)
+  Rendered layouts/_navigation.html.erb (3.7ms)
+  Rendered layouts/_messages.html.erb (0.5ms)
+Completed 200 OK in 84ms (Views: 80.1ms | ActiveRecord: 2.5ms)
+
+
+Finished "/cable/" [WebSocket] for 127.0.0.1 at 2017-01-10 08:32:03 -0500
+MessagesChannel stopped streaming from messages
+Started GET "/cable" for 127.0.0.1 at 2017-01-10 08:32:04 -0500
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-01-10 08:32:04 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+MessagesChannel is transmitting the subscription confirmation
+MessagesChannel is streaming from messages
