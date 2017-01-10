@@ -1,0 +1,43 @@
+<!-- # app/views/chatrooms/show.html.erb -->
+
+<%= form_for @registration, html: {class: "basic-grey"} do |f| %>
+  <% if @registration.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@registration.errors.count, "error") %>
+        prohibited this registration from being saved:
+      </h2>
+      <ul>
+        <% @registration.errors.full_message.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="actions col-md-2 col-md-offset-6">
+    <script class="stripe-button" src="https://checkout.stripe.com/checkout.js" 
+      data-key="<%= Rails.application.secrets.stripe_publishable_key %>"
+      data-description="stripe test"
+      data-amount="500">
+    </script>
+  </div>
+<% end %>
+
+<div class="row col-md-8 col-md-offset-2">
+  <h1><%= @chatroom.topic %></h1>
+
+<div class="panel panel-default">
+  <% if @chatroom.messages.any? %>
+    <div class="panel-body" id="messages">
+      <%= render partial: 'messages/message', collection: @chatroom.messages%>
+    </div>
+  <%else%>
+    <div class="panel-body hidden" id="messages">
+    </div>
+  <%end%>
+</div>
+
+  <%= render partial: 'messages/message_form', locals: {message: @message, chatroom: @chatroom}%>
+</div>
+
+<%= render 'disqus' %> 
