@@ -3442,3 +3442,45 @@ Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-01-10 08:32:04 -0500
 Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
 MessagesChannel is transmitting the subscription confirmation
 MessagesChannel is streaming from messages
+Started GET "/cable" for 127.0.0.1 at 2017-01-10 08:34:13 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-01-10 08:34:13 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+MessagesChannel is transmitting the subscription confirmation
+MessagesChannel is streaming from messages
+Started GET "/cable" for 127.0.0.1 at 2017-01-10 08:34:13 -0500
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-01-10 08:34:13 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+MessagesChannel is transmitting the subscription confirmation
+MessagesChannel is streaming from messages
+Started GET "/chatrooms/1" for 127.0.0.1 at 2017-01-10 08:34:16 -0500
+Processing by ChatroomsController#show as HTML
+  Parameters: {"slug"=>"1"}
+  [1m[36mChatroom Load (0.3ms)[0m  [1m[34mSELECT  "chatrooms".* FROM "chatrooms" WHERE "chatrooms"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering chatrooms/show.html.erb within layouts/application
+  [1m[36mMessage Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "messages" WHERE "messages"."chatroom_id" = $1 LIMIT $2[0m  [["chatroom_id", 1], ["LIMIT", 1]]
+  [1m[36mMessage Load (0.2ms)[0m  [1m[34mSELECT "messages".* FROM "messages" WHERE "messages"."chatroom_id" = $1[0m  [["chatroom_id", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered collection of messages/_message.html.erb [2 times] (14.6ms)
+  Rendered messages/_message_form.html.erb (307.1ms)
+  Rendered chatrooms/_disqus.html.erb (0.7ms)
+  Rendered chatrooms/show.html.erb within layouts/application (353.0ms)
+  Rendered layouts/_navigation_links.html.erb (0.5ms)
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered layouts/_nav_links_for_auth.html.erb (1.5ms)
+  Rendered layouts/_nav_links_for_chatroom.html.erb (0.5ms)
+  Rendered layouts/_navigation.html.erb (5.0ms)
+  Rendered layouts/_messages.html.erb (0.4ms)
+Completed 200 OK in 800ms (Views: 753.5ms | ActiveRecord: 10.9ms)
+
+
+Finished "/cable/" [WebSocket] for 127.0.0.1 at 2017-01-10 08:34:17 -0500
+MessagesChannel stopped streaming from messages
+Started GET "/cable" for 127.0.0.1 at 2017-01-10 08:34:17 -0500
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2017-01-10 08:34:17 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+MessagesChannel is transmitting the subscription confirmation
+MessagesChannel is streaming from messages
+Finished "/cable/" [WebSocket] for 127.0.0.1 at 2017-01-10 08:34:20 -0500
+MessagesChannel stopped streaming from messages
