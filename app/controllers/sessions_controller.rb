@@ -22,4 +22,7 @@ class SessionsController < ApplicationController
     redirect_to root_url, :alert => "Authentication error: #{params[:message].humanize}"
   end
 
+  def error
+    redirect_to root_url
+  end
 end
